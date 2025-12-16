@@ -1,0 +1,514 @@
+:root {
+    /* 💖 Cute Pixel Pallet 💖 */
+    --bg-color: #f0f8ff;         /* Very Light Blue / Sky */
+    --font-color: #4a4a4a;       /* Soft Gray Text */
+    --accent-pink: #ff69b4;      /* Hot Pink (for action/hearts) */
+    --accent-mint: #7fff00;      /* Chibi Green (Success/Go) */
+    --accent-blue: #00bfff;      /* Bright Blue (System/Border) */
+    --accent-yellow: #ffd700;    /* Gold (for highlights) */
+    --system-border: #00bfff;    /* Main border color */
+    --dialog-bg: #ffffff;        /* White dialog boxes */
+    --nav-bg: #ffe4e1;           /* Pale Pink for Nav */
+}
+
+/* Base Style & Resets (Kept clean) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--font-color);
+    /* Tile-map effect for the background */
+    background-image: linear-gradient(45deg, #e0f0ff 25%, transparent 25%),
+                      linear-gradient(-45deg, #e0f0ff 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #e0f0ff 75%),
+                      linear-gradient(-45deg, transparent 75%, #e0f0ff 75%);
+    background-size: 40px 40px;
+    background-position: 0 0, 0 20px, 20px 20px, -20px 0px;
+}
+
+/* --- OVERLAY STYLES --- */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.name-prompt-box {
+    background-color: var(--dialog-bg);
+    border: 5px solid var(--system-border);
+    padding: 30px;
+    text-align: center;
+    box-shadow: 10px 10px 0 var(--system-border);
+    max-width: 90%;
+}
+.name-prompt-box p {
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+.name-prompt-box input, .name-prompt-box button {
+    margin: 10px 0;
+}
+
+/* --- MAIN CONTAINER & LAYOUT --- */
+.container {
+    width: 90%;
+    max-width: 800px;
+    min-height: 600px;
+    background-color: var(--dialog-bg);
+    border: 5px solid var(--system-border);
+    box-shadow: 15px 15px 0 var(--system-border);
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+}
+
+nav {
+    width: 200px;
+    background-color: var(--nav-bg);
+    border-right: 5px solid var(--system-border);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. CENTER WELCOME NAME & INCREASE SIZE */
+.welcome-banner {
+    background-color: var(--accent-pink);
+    color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.8em; /* Increased size */
+    border: 3px solid #f0f8ff;
+}
+
+.nav-item {
+    display: block;
+    padding: 10px 5px;
+    text-decoration: none;
+    color: var(--font-color);
+    font-size: 0.7em;
+    border: 3px solid transparent;
+    margin-bottom: 5px;
+    transition: all 0.1s;
+}
+
+.nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--accent-yellow);
+}
+
+.nav-item.active {
+    background-color: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-pink);
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.page {
+    display: none;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- COMMON ELEMENTS --- */
+h2 {
+    font-size: 1.1em;
+    color: var(--accent-pink);
+    border-bottom: 3px solid var(--accent-pink);
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+input[type="text"], input[type="number"], input[type="date"] {
+    padding: 8px;
+    margin-right: 10px;
+    border: 3px solid var(--system-border);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7em;
+    background-color: white;
+}
+
+button {
+    background-color: var(--accent-mint);
+    color: white;
+    padding: 8px 12px;
+    border: 3px solid var(--accent-mint);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7em;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+button:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+.input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.input-group input {
+    flex-grow: 1;
+    min-width: 100px;
+    margin-bottom: 10px;
+}
+
+.pixel-list {
+    list-style: none;
+    padding: 0;
+}
+.pixel-list li {
+    border: 3px solid var(--system-border);
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    background-color: #f0f0ff; /* Light blue background for items */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- TASKS PAGE --- */
+.todo-list button {
+    background-color: var(--accent-pink);
+    border-color: var(--accent-pink);
+    padding: 5px 8px;
+    font-size: 0.6em;
+    margin-left: 10px;
+}
+
+.todo-list .completed {
+    text-decoration: line-through;
+    color: #a0a0a0;
+    border-color: #a0a0a0;
+    background-color: #f8f8f8;
+}
+
+/* --- EVENTS PAGE --- */
+.event-list button {
+    background-color: #ffaa00; /* Orange for events */
+    border-color: #ffaa00;
+}
+
+/* --- HOME PAGE WIDGETS --- */
+.widget-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.home-widget {
+    border: 3px solid var(--system-border);
+    padding: 15px;
+    flex: 1 1 300px;
+    background-color: #f0fff0;
+}
+
+/* 2. NEW MOOD TRACKER STYLES FOR NAVIGATION */
+.nav-mood-tracker {
+    margin-top: auto; /* Push to the bottom of the nav */
+    padding-top: 15px;
+    border-top: 3px solid var(--system-border);
+    text-align: center;
+}
+.nav-mood-tracker p {
+    font-size: 0.7em;
+    margin-bottom: 5px;
+    color: var(--accent-blue);
+}
+.mood-select-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+.mood-select-btn {
+    font-size: 0.5em; /* Smaller font to fit in the nav */
+    padding: 3px 5px;
+    flex-grow: 1;
+    min-width: 40px;
+}
+
+.wisdom-widget h3 {
+    font-size: 0.8em;
+    color: var(--accent-blue);
+    margin-bottom: 10px;
+}
+
+#wisdomList {
+    list-style: none;
+    padding: 0;
+}
+
+.wisdom-item {
+    padding: 5px 0;
+    font-size: 0.8em;
+    color: var(--font-color);
+    border-bottom: 1px dotted #ccc;
+}
+.wisdom-item:last-child {
+    border-bottom: none;
+}
+
+/* Budget Page */
+.retro-hr {
+    border: none;
+    border-top: 4px double var(--system-border);
+    margin: 20px 0;
+}
+.input-group label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 0.7em;
+    color: var(--font-color);
+}
+#setGoalBtn {
+    margin-top: 15px;
+    background-color: var(--accent-mint);
+    border-color: var(--accent-mint);
+}
+#logDailyBtn {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+/* --- DASHBOARD WIDGETS --- */
+.dashboard-trigger {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* Ensure it's above other content */
+    cursor: pointer;
+}
+/* 1. FIXED DASHBOARD POSITION */
+.dashboard-widgets {
+    position: absolute;
+    top: 50px;
+    right: 15px; /* <--- Pembetulan: Ditambah offset 15px */
+    width: 300px;
+    background-color: var(--dialog-bg);
+    border: 5px solid var(--system-border);
+    padding: 10px;
+    box-shadow: -15px 15px 0 var(--system-border); /* <--- Diperbesar sedikit */
+    display: grid;
+    /* ... */
+}
+.dashboard-widgets.hidden {
+    display: none;
+}
+.icon-square {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--accent-yellow);
+    border: 3px solid var(--system-border);
+    font-size: 1.2em;
+}
+
+.widget {
+    border: 3px solid var(--system-border);
+    padding: 5px;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fffaf0; /* Light yellow background */
+}
+.widget-label {
+    font-size: 0.6em;
+    color: var(--accent-blue);
+    margin-bottom: 5px;
+}
+.widget-value {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--font-color);
+    margin: 5px 0;
+}
+.widget-status {
+    font-size: 0.6em;
+    color: var(--accent-pink);
+    margin-top: auto; /* Push to bottom */
+}
+
+/* Mood Battery Visuals */
+.mood-battery-shell {
+    width: 60px;
+    height: 20px;
+    border: 3px solid var(--font-color);
+    margin: 5px auto 0 auto;
+    background-color: var(--dialog-bg);
+    position: relative;
+    padding: 1px;
+}
+.mood-battery-shell::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: -8px;
+    width: 4px;
+    height: 12px;
+    background-color: var(--font-color);
+}
+.mood-battery-fill {
+    height: 100%;
+    width: 0;
+    transition: width 0.5s ease-out;
+}
+
+/* Mood Battery Colors */
+.fill-amazing { background-color: var(--accent-pink) !important; } /* Pink - Full Bar (Amazing) */
+.fill-happy { background-color: var(--accent-yellow) !important; } /* Yellow - Almost Full (Happy) */
+.fill-okay { background-color: #ff8c00 !important; } /* Dark Orange - Half (Okay) */
+.fill-sad { background-color: #ff4500 !important; } /* Red-Orange - Zero (Sad) */
+
+/* --- TASK PROGRESS BAR (Previous Request) --- */
+.task-progress-container {
+    width: 100px;
+    height: 12px;
+    border: 3px solid var(--font-color);
+    margin: 5px auto 0 auto;
+    background-color: var(--dialog-bg);
+    padding: 1px;
+}
+#taskProgressBar {
+    height: 100%;
+    width: 0;
+    transition: width 0.5s ease-out;
+    background-color: var(--accent-mint); /* Default to Mint (Green) */
+}
+
+/* --- DASHBOARD LIST (Previous Request) --- */
+.dashboard-list {
+    list-style: none;
+    padding: 0;
+    font-size: 0.7em;
+    margin-top: 5px;
+}
+.dashboard-list li {
+    background-color: #f0fff0; /* Light green for list items */
+    border: 1px solid #ddd;
+    padding: 3px 5px;
+    margin-bottom: 3px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- CALENDAR STYLES (New Request) --- */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 3px solid var(--system-border);
+    padding: 5px;
+    background-color: #f0f0f0;
+}
+.calendar-controls h3 {
+    font-size: 0.8em;
+    color: var(--accent-pink);
+    margin: 0;
+}
+.calendar-controls button.nav-btn {
+    padding: 5px 8px;
+    font-size: 0.7em;
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    border: 3px solid var(--system-border);
+    margin-bottom: 20px;
+    background-color: var(--system-border); /* Grid lines color */
+}
+.day-header, .calendar-day {
+    padding: 5px 2px;
+    text-align: center;
+    font-size: 0.6em;
+    background-color: white;
+    user-select: none;
+}
+.day-header {
+    background-color: var(--nav-bg); /* Pale Pink */
+    color: var(--font-color);
+    font-weight: bold;
+}
+.calendar-day {
+    cursor: pointer; /* Change to pointer to indicate clickable */
+    background-color: #f9f9f9;
+    color: #4a4a4a;
+    height: 30px; /* fixed height for square cells */
+    transition: background-color 0.1s;
+}
+.calendar-day:hover:not(.inactive) {
+    background-color: #e0e0e0; /* Hover effect */
+}
+.calendar-day.inactive {
+    color: #ccc;
+    background-color: #f0f0f0;
+    cursor: default;
+}
+.calendar-day.today {
+    border: 2px solid var(--accent-pink);
+    background-color: #fff0f5; /* Light Pink */
+}
+.calendar-day.has-event {
+    background-color: var(--accent-yellow) !important;
+    color: var(--font-color);
+    font-weight: bold;
+    border: 2px solid var(--accent-blue);
+    position: relative;
+}
+.calendar-day.has-event::after {
+    content: '★';
+    position: absolute;
+    bottom: -3px;
+    right: 0;
+    font-size: 0.5em;
+    color: var(--accent-pink);
+    text-shadow: 1px 1px 0 #000;
+}

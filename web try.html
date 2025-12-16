@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Productivity Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="webstyle.css">
+</head>
+<body>
+    <div id="namePromptOverlay" class="overlay">
+        <div class="name-prompt-box">
+            <p>WELCOME TO YOUR ADVENTURE!</p>
+            <input type="text" id="nameInput" placeholder="PLAYER NAME">
+            <button id="submitNameBtn">START!</button>
+        </div>
+    </div>
+
+    <div class="dashboard-trigger">
+        <div class="icon-square">
+            <p>🔲</p> 
+        </div>
+        
+        <div class="dashboard-widgets hidden" id="dashboardWidgets">
+            
+            <div class="widget tasks-widget">
+                <p class="widget-label">MISSION COMPLETE</p>
+                <div class="task-progress-container">
+                    <div class="task-progress-fill" id="taskProgressBar"></div>
+                </div>
+                <p class="widget-value" id="taskPercentDisplay">0%</p> 
+                <p class="widget-status" id="taskStatusDisplay">NO TASKS STARTED</p>
+            </div>
+            
+            <div class="widget events-widget">
+                <p class="widget-label">UPCOMING THIS WEEK</p>
+                <ul id="upcomingEventsList" class="dashboard-list">
+                    <li>NO EVENTS SCHEDULED</li>
+                </ul>
+            </div>
+            
+            <div class="widget mood-widget">
+                <p class="widget-label">MOOD BATTERY</p>
+                <div class="mood-battery-shell">
+                    <div class="mood-battery-fill" id="moodBatteryFill"></div>
+                </div>
+                <p class="widget-status" id="moodBatteryStatus">NOT TRACKED YET</p>
+            </div>
+            
+            <div class="widget budget-widget">
+                <p class="widget-label">BUDGET AIM</p>
+                <p class="widget-value" id="budgetRemainingDisplay">$0 LEFT</p>
+                <p class="widget-status">NO GOAL SET</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav>
+            <div class="welcome-banner">
+                <p id="welcomeMessage">WELCOME, PLAYER!</p>
+            </div>
+            <a href="#home" class="nav-item active" data-page="home">HOME</a>
+            <a href="#tasks" class="nav-item" data-page="tasks">MISSION LOG</a>
+            <a href="#events" class="nav-item" data-page="events">EVENTS</a>
+            <a href="#budget" class="nav-item" data-page="budget">BUDGET</a>
+
+            <div class="nav-mood-tracker">
+                <p>DAILY MOOD:</p>
+                <div class="mood-select-group">
+                    <button class="mood-select-btn" data-mood="AMAZING">💖 AMAZING</button>
+                    <button class="mood-select-btn" data-mood="HAPPY">😊 HAPPY</button>
+                    <button class="mood-select-btn" data-mood="OKAY">😐 OKAY</button>
+                    <button class="mood-select-btn" data-mood="SAD">😭 SAD</button>
+                </div>
+            </div>
+        </nav>
+        
+        <main id="mainContentArea">
+            <section id="home" class="page active">
+                <h2>PIXEL HUB HOME</h2>
+                <div class="widget-area">
+                    <div class="home-widget wisdom-widget">
+                        <h3>WISDOM OF THE DAY:</h3>
+                        <ul id="wisdomList">
+                            <li class="wisdom-item">Remember to save your progress!</li>
+                            <li class="wisdom-item">A small step today is a big leap tomorrow.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tasks" class="page">
+                <h2>MISSION LOG / TO-DO</h2>
+                <div class="input-group">
+                    <input type="text" id="todoInput" placeholder="New Mission Title">
+                    <button id="addTodoBtn">ADD MISSION</button>
+                </div>
+                <ul id="todoList" class="pixel-list todo-list">
+                    <li>NO MISSIONS YET</li>
+                </ul>
+            </section>
+
+            <section id="events" class="page">
+                <h2>EVENT CALENDAR</h2>
+                <div class="calendar-controls">
+                    <button id="prevMonthBtn" class="nav-btn">◀</button>
+                    <h3 id="currentMonthYear">MONTH YEAR</h3>
+                    <button id="nextMonthBtn" class="nav-btn">▶</button>
+                </div>
+                <div id="calendarGrid" class="calendar-grid">
+                    </div>
+                <div class="input-group">
+                    <input type="text" id="eventInput" placeholder="Event Name">
+                    <input type="date" id="eventDateInput">
+                    <button id="addEventBtn">SCHEDULE EVENT</button>
+                </div>
+                <ul id="eventList" class="pixel-list event-list">
+                    </ul>
+            </section>
+
+            <section id="budget" class="page">
+                <h2>BUDGET AIM / GOAL TRACKER</h2>
+                
+                <div class="input-group">
+                    <label>GOAL NAME:</label>
+                    <input type="text" id="goalNameInput" placeholder="Vacation Fund">
+                    <label>TOTAL AIM ($):</label>
+                    <input type="number" id="goalAmountInput" placeholder="500">
+                    <button id="setGoalBtn">SET AIM</button>
+                </div>
+                
+                <hr class="retro-hr">
+                
+                <div class="progress-info">
+                    <h3>GOAL: <span id="currentGoalName">N/A</span></h3>
+                    <p>REMAINING:</p>
+                    <p id="budgetRemaining" class="welcome-text">$0 LEFT</p>
+                </div>
+                
+                <hr class="retro-hr">
+
+                <h3>DAILY LOG:</h3>
+                <input type="number" id="dailyAmountInput" placeholder="Enter daily savings amount">
+                <button id="logDailyBtn">LOG SAVINGS</button>
+
+                <h3 style="margin-top: 20px;">SAVINGS HISTORY:</h3>
+                <ul id="savingsHistoryList" class="pixel-list">
+                    <li>NO LOGS YET</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <script src="functionweb.js"></script>
+</body>
+</html>
